@@ -22,5 +22,12 @@
     .menu{
         margin-right: 2rem;
         cursor: pointer;
+        ul {
+            list-style: none;
+            li {
+                padding-left: 2em; 
+                text-indent: -2em;
+            }
+        }
     }
 }
