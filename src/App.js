@@ -58,7 +58,7 @@ class App extends Component {
             <Homepage />
           </MainLayout>
         )} />
-        <Route exact path="/registration" render={() => (
+        <Route exact path="/registration" render={() => currentUser ? <Redirect to="/" /> : (
           <MainLayout currentUser={currentUser}>
             <Registration />
           </MainLayout>
