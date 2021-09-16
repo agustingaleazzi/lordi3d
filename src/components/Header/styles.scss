@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Monoton&family=Recursive&display=swap');
+.header{
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    font-family: 'Cinzel', serif;
+    color: #EAEAEA;
+    max-height: 6.5rem;
+    box-shadow: 0px 2px 4px 0 rgba(0,0,0, .1);
+    border: 1px;
+    border-style: solid;
+    border-color: #BD632F;
+    background-color: #A4243B;
+    .logo{        
+    font-family: 'Monoton', cursive;
+    font-size: 4rem;
+    left: 2rem;
+    margin-left: 2rem;
+    }   
+    .menu{
+        margin-right: 2rem;
+        cursor: pointer;
+        span {
+            margin-left: 2em; 
+            margin-right: 1.3em;
+            line-height: 1;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+        }
+        ul {
+            list-style: none;
+            li {
+                display: inline-block;
+                margin-left: 2em; 
+                margin-right: 1.3em;
+                text-indent: -2em;
+                &:last-child{                    
+                margin-right: 0em;
+                }
+                a{
+                    line-height: 1;
+                    text-transform: uppercase;
+                    font-size: 1.7rem;
+        
+                }
+            }
+        }
+    }
+}
