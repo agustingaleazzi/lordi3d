@@ -9,6 +9,7 @@ import MainLayout from './layouts/MainLayout';
 import Homepage from './Pages/Homepage/Homepage.js';
 import Registration from './Pages/Registration/Registration.js';
 import Login from './Pages/Login/Login.js';
+import Recovery from './Pages/Recovery/Recovery';
 import './default.scss';
 
 
@@ -25,7 +26,7 @@ class App extends Component {
       ...initialState
     }
   }
-  
+
   authListener = null;
 
   componentDidMount() {
@@ -67,6 +68,12 @@ class App extends Component {
           render={() => currentUser ? <Redirect to="/" /> : (
             <MainLayout currentUser={currentUser}>
               <Login />
+            </MainLayout>
+          )} />
+        <Route exact path="/recovery"
+          render={() => (
+            <MainLayout currentUser={currentUser}>
+              <Recovery />
             </MainLayout>
           )} />
       </div>
