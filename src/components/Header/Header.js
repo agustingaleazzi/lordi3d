@@ -1,11 +1,18 @@
 import React from 'react';
 import './styles.scss';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { auth } from './../../firebase/utils';
 
+const mapState = ({ user }) => ({
+    currentUser: user.currentUser
+});
 
 const Header = props => {
-    const {currentUser} = props;
+
+    //user selector function to set the current user on the component. it uses mapstate
+    const { currentUser } = useSelector(mapState);
+
     return (
         <header className="header">
             <Link to="/"><h1 className="logo">
@@ -14,7 +21,14 @@ const Header = props => {
             </Link>
             <div className="menu">
                 {currentUser && (
+
+
                     <ul>
+                        <li>
+                            <Link to="/dashboard">
+                                My account
+                            </Link>
+                        </li>
                         <li>
                             <span onClick={() => auth.signOut()}>
                                 Logout
@@ -45,4 +59,7 @@ Header.defaultProps = {
     currentUser: null
 };
 
+
+
+//conectando el header a redux
 export default Header;
