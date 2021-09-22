@@ -1,42 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import './styles.scss';
 
-import { auth } from './../../firebase/utils';
+import { resetPassword, resetAllAuthForms } from '../../redux/User/user.actions';
 
 import Button from '../Forms/Button/Button';
 import AuthWrapper from '../AuthWrapper/AuthWrapper';
 import FormInput from '../Forms/FormInput/FormInput';
 
+const mapState = ({ user }) => ({
+    resetPasswordSuccess: user.resetPasswordSuccess,
+    resetPasswordError: user.resetPasswordError
+})
 
 const EmailPassword = props => {
-    
+    const {resetPasswordSuccess, resetPasswordError } = useSelector(mapState);
+    const dispatch = useDispatch();
     const [ email, setEmail ] = useState('');
     const [ errors, setErrors] = useState([]);
+
+    useEffect(()=> {
+        if(resetPasswordSuccess){
+            console.log('exito')
+            dispatch(resetAllAuthForms());
+            props.history.push('/login');
+        }
+    },[resetPasswordSuccess])
+
+    useEffect(()=> {
+        if(Array.isArray(resetPasswordError) && resetPasswordError.length>0){
+            setErrors(resetPasswordError);
+        }
+    },[resetPasswordError])
+
 
     /*const resetForm = () => {
         setErrors([]);
         setEmail('');
     }*/
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            const config = {
-                //CAMBIAR LUEGO
-                url: 'http://localhost:3000/login'
-            };
-            await auth.sendPasswordResetEmail(email, config)
-                .then(() => {
-                    props.history.push('/login');
-                })
-                .catch(() => {
-                    const err = ['Email no encontrado, por favor intente nuevamente.'];
-                    setErrors(err)
-                });
-        } catch (err) {
-            console.log(err);
-        }
+        dispatch(resetPassword({email}));        
     }
         const configAuthWrapper = {
             headline: 'Email Password'

@@ -3,13 +3,15 @@ import userTypes from "./user.types";
 const INITIAL_STATE = {
     currentUser: null,
     signInSuccess: false,
+    signUpSuccess: false,
     signUpError: [],
-    signUpSuccess: false
+    resetPasswordSuccess: false,
+    resetPassWordError: []
 
 };
 
-const userReducer = (state=INITIAL_STATE, action) => {
-    switch(action.type){
+const userReducer = (state = INITIAL_STATE, action) => {
+    switch (action.type) {
         case userTypes.SET_CURRENT_USER:
             return {
                 ...state,
@@ -30,7 +32,26 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 ...state,
                 signUpSuccess: action.payload
             }
-        default: 
+        case userTypes.RESET_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                resetPasswordSuccess: action.payload
+            }
+        case userTypes.RESET_PASSWORD_ERROR:
+            return {
+                ...state,
+                resetPasswordError: action.payload
+            }
+        case userTypes.RESET_AUTH_FORMS:
+            return {
+                ...state,
+                signInSuccess: false,
+                signUpSuccess: false,
+                signUpError: [],
+                resetPasswordSuccess: false,
+                resetPassWordError: []
+            }
+        default:
             return state;
     }
 };
