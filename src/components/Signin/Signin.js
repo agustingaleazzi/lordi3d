@@ -42,7 +42,6 @@ const Signin = props => {
     const handleGoogleSignIn = () => {
         dispatch(signInWithGoogle());
     }
-
     const configAuthWrapper = {
         headline: 'Iniciar sesión'
     };
