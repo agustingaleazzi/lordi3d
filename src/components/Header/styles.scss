@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Monoton&family=Recursive&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Monoton:wght@700&family=Recursive&display=swap');
 .header{
     margin-top: 2rem;
     display: flex;
@@ -12,12 +12,13 @@
     border: 1px;
     border-style: solid;
     border-color: #BD632F;
-    background-color: #A4243B;
-    .logo{        
-    font-family: 'Monoton', cursive;
-    font-size: 4rem;
-    left: 2rem;
-    margin-left: 2rem;
+    background-color: #DA2C38;
+    .logo{    
+        color:#191919;    
+        font-family: 'Monoton', cursive;
+        font-size: 4rem;
+        left: 2rem;
+        margin-left: 3rem;
     }   
     .menu{
         margin-right: 2rem;
@@ -40,10 +41,10 @@
                 margin-right: 0em;
                 }
                 a{
+                    color:#191919;    
                     line-height: 1;
                     text-transform: uppercase;
-                    font-size: 1.7rem;
-        
+                    font-size: 1.7rem;        
                 }
             }
         }
