@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router';
-import { signUpUser, resetAllAuthForms } from '../../redux/User/user.actions';
+import { useHistory, UseHistory } from 'react-router';
+import { signUpUserStart } from '../../redux/User/user.actions';
 
 import FormInput from '../Forms/FormInput/FormInput';
 import Button from '../Forms/Button/Button';
@@ -10,13 +10,17 @@ import AuthWrapper from '../AuthWrapper/AuthWrapper';
 import './styles.scss';
 
 const mapState = ({user}) => ({
-    signUpSuccess: user.signUpSuccess,
-    signUpError: user.signUpError
+    currentUser: user.currentUser,
+    userErr: user.userErr
 })
 
 
 const Signup = props => {
-    const {signUpSuccess,signUpError} = useSelector(mapState)
+    //getting values from redux
+    const history = useHistory();
+    const {currentUser,userErr} = useSelector(mapState);
+
+
     const dispatch = useDispatch();
     const [displayName, setDisplayName] = useState('');
     const [email, setEmail] = useState('');
@@ -25,17 +29,16 @@ const Signup = props => {
     const [errors, setErrors] = useState('');
 
     useEffect(() => {
-        if(signUpSuccess){
+        if(currentUser){
         resetForm();
-        dispatch(resetAllAuthForms());
-        props.history.push('/');
+        history.push('/');
         }
-    }, [signUpSuccess])
+    }, [currentUser])
     useEffect(() => {
-        if(Array.isArray(signUpError) && signUpError.length>0){
-            setErrors(signUpError);
+        if(Array.isArray(userErr) && userErr.length>0){
+            setErrors(userErr);
             }
-    }, [signUpError])
+    }, [userErr])
 
     const resetForm = () => {
         setDisplayName('');
@@ -47,7 +50,7 @@ const Signup = props => {
     const handleFormSubmit = async event => {
         //prevents the form to posting itself and reload the page
         event.preventDefault();
-        dispatch(signUpUser({
+        dispatch(signUpUserStart({
             displayName, email, password, confirmPassword
         }));
         
@@ -108,4 +111,4 @@ const Signup = props => {
 
 }
 
-export default withRouter(Signup);
+export default Signup;

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
-import { signInUser, signInWithGoogle, resetAllAuthForms } from '../../redux/User/user.actions';
+import { Link, useHistory } from 'react-router-dom';
+import { emailSignInStart, googleSignInStart } from '../../redux/User/user.actions';
+
 
 import './styles.scss';
 
@@ -10,25 +11,26 @@ import AuthWrapper from '../AuthWrapper/AuthWrapper';
 import FormInput from '../Forms/FormInput/FormInput';
 
 
-const mapState = ({user}) => ({
-    signInSuccess: user.signInSuccess
+const mapState = ({ user }) => ({
+    currentUser: user.currentUser
 })
 
 const Signin = props => {
-    //acceso a dispatch
-    const {signInSuccess} = useSelector(mapState);
     const dispatch = useDispatch();
+    const history = useHistory();
+    //acceso a dispatch
+    const { currentUser } = useSelector(mapState);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     useEffect(() => {
-        if(signInSuccess){
+        if (currentUser) {
             console.log('exito');
             resetForm();
-            dispatch(resetAllAuthForms());
-            props.history.push('/')
+            history.push('/')
         }
-    }, [signInSuccess]);
+    }, [currentUser]);
 
     const resetForm = () => {
         setEmail('');
@@ -37,10 +39,10 @@ const Signin = props => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(signInUser({email, password}));
+        dispatch(emailSignInStart({ email, password }));
     }
     const handleGoogleSignIn = () => {
-        dispatch(signInWithGoogle());
+        dispatch(googleSignInStart());
     }
     const configAuthWrapper = {
         headline: 'Iniciar sesión'
@@ -88,5 +90,5 @@ const Signin = props => {
     )
 
 }
-//with router we have access to the history
-export default withRouter(Signin);
+
+export default Signin;

@@ -1,28 +1,31 @@
 import React from 'react';
 import './styles.scss';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { signOutUserStart } from '../../redux/User/user.actions';
 import { Link } from 'react-router-dom';
-import { auth } from './../../firebase/utils';
 
 const mapState = ({ user }) => ({
     currentUser: user.currentUser
 });
 
 const Header = props => {
+    const dispatch = useDispatch();
 
     //user selector function to set the current user on the component. it uses mapstate
     const { currentUser } = useSelector(mapState);
 
+    const signOut = () => {
+        dispatch(signOutUserStart());
+    };
+
     return (
         <header className="header">
             <Link to="/"><h1 className="logo">
-                Impresiones 3d
+                Imp3D
             </h1>
             </Link>
             <div className="menu">
                 {currentUser && (
-
-
                     <ul>
                         <li>
                             <Link to="/dashboard">
@@ -30,7 +33,7 @@ const Header = props => {
                             </Link>
                         </li>
                         <li>
-                            <span onClick={() => auth.signOut()}>
+                            <span onClick={() => signOut()}>
                                 Logout
                             </span>
                         </li>
