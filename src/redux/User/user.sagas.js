@@ -5,7 +5,7 @@ import { auth, handleUserProfile, getCurrentUser, GoogleProvider } from './../..
 import { handleResetPasswordAPI } from './user.helpers';
 
 
-export function* getSnapshotFromUserAuth(user, additionalData={}) {
+export function* getSnapshotFromUserAuth(user, additionalData = {}) {
     try {
         //call gets the function as first argument, and the functions argument as a second one
         //sign in with handleUserProfile
@@ -27,7 +27,7 @@ export function* emailSignin({ payload: { email, password } }) {
     try {
         //signin in the user, not updating the store
         const user = yield auth.signInWithEmailAndPassword(email, password);
-        yield getSnapshotFromUserAuth(user);        
+        yield getSnapshotFromUserAuth(user);
     } catch (err) {
         console.log(err)
     }
@@ -85,7 +85,7 @@ export function* signUpUser({ payload: {
     try {
         const { user } = yield auth.createUserWithEmailAndPassword(email, password);
         const additionalData = { displayName };
-        yield getSnapshotFromUserAuth(user, additionalData );
+        yield getSnapshotFromUserAuth(user, additionalData);
     } catch (err) {
         console.log(err)
     }
@@ -96,7 +96,7 @@ export function* onSignUpUserStart() {
     yield takeLatest(userTypes.SIGN_UP_USER_START, signUpUser)
 }
 
-export function* resetPassword({payload:{email}}){
+export function* resetPassword({ payload: { email } }) {
     try {
         //yield to await for the promise to resolve
         yield call(handleResetPasswordAPI, email);
@@ -114,18 +114,18 @@ export function* onResetPasswordStart() {
     yield takeLatest(userTypes.RESET_PASSWORD_START, resetPassword)
 }
 
-export function* googleSignIn(){
-    try { 
-        const {user} = yield auth.signInWithPopup(GoogleProvider)
+export function* googleSignIn() {
+    try {
+        const { user } = yield auth.signInWithPopup(GoogleProvider)
         yield getSnapshotFromUserAuth(user)
-    } catch(err) {
+    } catch (err) {
         console.log(err);
     }
 
 }
 
 
-export function* onGoogleSignInStart(){
+export function* onGoogleSignInStart() {
     yield takeLatest(userTypes.GOOGLE_SIGN_IN_START, googleSignIn)
 }
 

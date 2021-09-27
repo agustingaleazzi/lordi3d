@@ -13,7 +13,7 @@ const mapState = ({ user }) => ({
 });
 
 const useAuth = props => {
-
+//using the user on the redux store.
     const { currentUser } = useSelector(mapState);
     const history = useHistory();
     useEffect(() => {

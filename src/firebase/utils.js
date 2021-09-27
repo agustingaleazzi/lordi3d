@@ -18,6 +18,7 @@ GoogleProvider.setCustomParameters({ prompt: 'select_account' });
 export const handleUserProfile = async ({ userAuth, additionalData }) => {
     if (!userAuth) return;
     const { uid } = userAuth;
+    //using id to search for the user on the firebase database
     const userRef = firestore.doc(`users/${uid}`);
     //checking if the user exists
     const snapshot = await userRef.get();
@@ -25,15 +26,17 @@ export const handleUserProfile = async ({ userAuth, additionalData }) => {
     if (!snapshot.exists) {
         const { displayName, email } = userAuth;
         const timestamp = new Date();
+        const userRoles = ['user'];
         try {
             await userRef.set({
                 displayName,
                 email,
                 createdDate: timestamp,
+                userRoles,
                 ...additionalData
             });
         } catch (err) {
-            console.log(err)
+            // console.log(err)
         }
     }
     //regardless if it exists or not, we return the user ref to the local state
